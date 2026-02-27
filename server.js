@@ -174,7 +174,7 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────────────────────
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`notes-service running → http://0.0.0.0:${PORT}`);
   console.log(`Storage file          → ${DATA_FILE}`);
 });
