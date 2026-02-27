@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #1a1714;
+      --paper:     #f5f0e8;
+      --cream:     #ede7d5;
+      --rule:      #cfc8b4;
+      --accent:    #c0392b;
+      --accent-dk: #962d22;
+      --muted:     #7a7060;
+      --ok:        #2e7d5e;
+      --ok-bg:     #e8f5ee;
+      --err-bg:    #fdecea;
+
+      --ff-serif: 'Instrument Serif', Georgia, serif;
+      --ff-mono:  'DM Mono', 'Courier New', monospace;
+
+      --max-w: 680px;
+      --rad:   4px;
+    }
+
+    html { font-size: 16px; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--ff-mono);
+      min-height: 100vh;
+      /* subtle graph-paper grid */
+      background-image:
+        linear-gradient(var(--rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    .shell {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    /* ── Header ──────────────────────────────────────────── */
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding: 2.5rem 0 1.25rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-family: var(--ff-serif);
+      font-size: 2.6rem;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    header .tagline {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ── Flash ───────────────────────────────────────────── */
+    .flash {
+      padding: 0.75rem 1rem;
+      border-radius: var(--rad);
+      font-size: 0.8rem;
+      margin-bottom: 1.75rem;
+      border-left: 3px solid;
+      animation: slide-in 0.2s ease;
+    }
+    .flash.success {
+      background: var(--ok-bg);
+      border-color: var(--ok);
+      color: var(--ok);
+    }
+    .flash.error {
+      background: var(--err-bg);
+      border-color: var(--accent);
+      color: var(--accent-dk);
+    }
+
+    @keyframes slide-in {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Card ────────────────────────────────────────────── */
+    .card {
+      background: #fffdf7;
+      border: 1.5px solid var(--rule);
+      border-radius: var(--rad);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 3px 3px 0 var(--rule);
+    }
+
+    .card-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ── Form ────────────────────────────────────────────── */
+    .form-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+    }
+
+    textarea {
+      flex: 1;
+      resize: vertical;
+      min-height: 80px;
+      padding: 0.6rem 0.75rem;
+      font-family: var(--ff-mono);
+      font-size: 0.85rem;
+      background: var(--paper);
+      border: 1.5px solid var(--rule);
+      border-radius: var(--rad);
+      color: var(--ink);
+      line-height: 1.55;
+      transition: border-color 0.15s;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: var(--ink);
+    }
+    textarea::placeholder { color: var(--rule); }
+
+    .char-count {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 0.3rem;
+    }
+    .char-count.warn { color: var(--accent); }
+
+    button[type="submit"] {
+      padding: 0.6rem 1.1rem;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: var(--rad);
+      font-family: var(--ff-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, transform 0.1s;
+      align-self: flex-end;
+    }
+    button[type="submit"]:hover  { background: var(--accent); }
+    button[type="submit"]:active { transform: scale(0.97); }
+
+    /* ── Notes list ──────────────────────────────────────── */
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .notes-header h2 {
+      font-family: var(--ff-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      font-style: italic;
+    }
+    .badge {
+      background: var(--ink);
+      color: var(--paper);
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 0.2rem 0.55rem;
+      border-radius: 99px;
+      letter-spacing: 0.06em;
+    }
+
+    .note-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .note-item {
+      background: #fffdf7;
+      border: 1.5px solid var(--rule);
+      border-radius: var(--rad);
+      padding: 0.9rem 1.1rem;
+      box-shadow: 2px 2px 0 var(--rule);
+      animation: pop-in 0.2s ease backwards;
+    }
+
+    @keyframes pop-in {
+      from { opacity: 0; transform: scale(0.98) translateY(4px); }
+      to   { opacity: 1; transform: scale(1)    translateY(0); }
+    }
+
+    .note-text {
+      font-family: var(--ff-serif);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+
+    .note-meta {
+      margin-top: 0.45rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 0.82rem;
+      border: 1.5px dashed var(--rule);
+      border-radius: var(--rad);
+      letter-spacing: 0.04em;
+    }
+    .empty-state span { display: block; font-size: 2rem; margin-bottom: 0.5rem; }
+
+    /* ── Storage error banner ────────────────────────────── */
+    .storage-error {
+      background: var(--err-bg);
+      border: 1.5px solid var(--accent);
+      border-radius: var(--rad);
+      color: var(--accent-dk);
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      font-size: 0.65rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <header>
+      <h1>Notes</h1>
+      <span class="tagline">plain-text · disk-backed</span>
+    </header>
+
+    <!-- Flash message -->
+    <% if (flash) { %>
+      <div class="flash <%= flashType %>"><%= flash %></div>
+    <% } %>
+
+    <!-- Storage error -->
+    <% if (storageError) { %>
+      <div class="storage-error">⚠ Storage error: <%= storageError %></div>
+    <% } %>
+
+    <!-- ── New note form ── -->
+    <div class="card">
+      <p class="card-title">New note</p>
+      <form method="POST" action="/notes" id="note-form">
+        <div class="form-row">
+          <div style="flex:1">
+            <textarea
+              name="text"
+              id="note-text"
+              placeholder="Write something…"
+              maxlength="500"
+              required
+              autofocus
+            ></textarea>
+            <div class="char-count" id="char-count">0 / 500</div>
+          </div>
+          <button type="submit">Save note</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- ── Notes list ── -->
+    <div class="notes-header">
+      <h2>All notes</h2>
+      <span class="badge"><%= notes.length %></span>
+    </div>
+
+    <% if (notes.length === 0) { %>
+      <div class="empty-state">
+        <span>✎</span>
+        No notes yet. Write one above.
+      </div>
+    <% } else { %>
+      <ul class="note-list">
+        <% notes.slice().reverse().forEach(function(note, i) { %>
+          <li class="note-item" style="animation-delay: <%= i * 40 %>ms;">
+            <p class="note-text"><%= note.text %></p>
+            <p class="note-meta">
+              <%= new Date(note.createdAt).toLocaleString('en-GB', {
+                    day:    '2-digit',
+                    month:  'short',
+                    year:   'numeric',
+                    hour:   '2-digit',
+                    minute: '2-digit'
+                  }) %>
+              &nbsp;·&nbsp; id: <%= note.id %>
+            </p>
+          </li>
+        <% }); %>
+      </ul>
+    <% } %>
+
+    <footer>
+      <span>notes-service v2</span>
+      <span>Node.js + Express + EJS · JSON storage</span>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── Live character counter ────────────────────────────────────────────────
+    const textarea  = document.getElementById('note-text');
+    const counter   = document.getElementById('char-count');
+    const MAX       = 500;
+
+    textarea.addEventListener('input', () => {
+      const len = textarea.value.length;
+      counter.textContent = `${len} / ${MAX}`;
+      counter.classList.toggle('warn', len > MAX * 0.85);
+    });
+
+    // ── Auto-dismiss flash after 4s ───────────────────────────────────────────
+    const flash = document.querySelector('.flash');
+    if (flash) {
+      setTimeout(() => {
+        flash.style.transition = 'opacity 0.4s';
+        flash.style.opacity = '0';
+        setTimeout(() => flash.remove(), 400);
+      }, 4000);
+    }
+
+    // ── Prevent double-submit ─────────────────────────────────────────────────
+    const form = document.getElementById('note-form');
+    form.addEventListener('submit', () => {
+      form.querySelector('button[type="submit"]').disabled = true;
+    });
+  </script>
+</body>
+</html>
