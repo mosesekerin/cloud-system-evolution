@@ -1,0 +1,37 @@
+<mxfile host="65bd71144e">
+    <diagram id="f1xqaYJ9OgaWyhUN3FeW" name="Page-1">
+        <mxGraphModel dx="800" dy="375" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="14" value="&lt;b&gt;Developer Machine&lt;/b&gt;&lt;br&gt;(Local Laptop)" style="html=1;align=center;verticalAlign=middle;rounded=0;absoluteArcSize=1;arcSize=10;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+                    <mxGeometry x="215" y="90" width="190" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="&lt;b&gt;Cloud VM&lt;/b&gt;&lt;br&gt;(Linux OS)" style="html=1;align=center;verticalAlign=middle;rounded=0;absoluteArcSize=1;arcSize=10;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+                    <mxGeometry x="155" y="300" width="310" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" value="Node.js Application +&amp;nbsp;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Local JSON File&lt;/span&gt;&lt;div&gt;&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;color: rgb(0, 0, 0); text-align: left;&quot;&gt;(Manuel Deployment)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;/div&gt;" style="dashed=1;rounded=1;absoluteArcSize=1;arcSize=20;html=1;verticalAlign=top;align=left;spacingTop=5;spacingLeft=10;whiteSpace=wrap;" vertex="1" parent="16">
+                    <mxGeometry x="32.5" y="20" width="250" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="Systemd Supervisor&lt;div&gt;(Systemctl Restart)&lt;/div&gt;" style="dashed=1;rounded=1;absoluteArcSize=1;arcSize=20;html=1;verticalAlign=top;align=center;spacingTop=5;spacingLeft=10;whiteSpace=wrap;" vertex="1" parent="16">
+                    <mxGeometry x="145" y="160" width="145" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Open port: 3000" style="html=1;align=center;verticalAlign=top;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;whiteSpace=wrap;" vertex="1" parent="16">
+                    <mxGeometry x="15" y="170" width="105" height="30" as="geometry"/>
+                </mxCell>
+                <object placeholders="1" c4Type="Relationship" c4Description="Sends SSH Connection requests (Port 22)" label="&lt;div style=&quot;text-align: left&quot;&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;b&gt;%c4Description%&lt;/b&gt;&lt;/div&gt;" id="25">
+                    <mxCell style="endArrow=blockThin;html=1;fontSize=10;fontColor=#404040;strokeWidth=1;endFill=1;strokeColor=#828282;elbow=vertical;metaEdit=1;endSize=14;startSize=14;jumpStyle=arc;jumpSize=16;rounded=0;edgeStyle=orthogonalEdgeStyle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1">
+                        <mxGeometry width="240" relative="1" as="geometry">
+                            <mxPoint x="310" y="170" as="sourcePoint"/>
+                            <mxPoint x="310" y="300" as="targetPoint"/>
+                            <Array as="points"/>
+                        </mxGeometry>
+                    </mxCell>
+                </object>
+                <mxCell id="26" value="Deployment Model: Note Application System" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="260" width="100" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
