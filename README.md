@@ -203,10 +203,15 @@ sudo systemctl disable notesapp
 After completing this setup:
 
 ✔ App runs as a managed Linux service
+
 ✔ Automatically restarts on crash
+
 ✔ Starts on system boot
+
 ✔ Runs as non-root
+
 ✔ Logs to `/var/log/notesapp.log`
+
 ✔ Persists notes to disk
 
 ---
